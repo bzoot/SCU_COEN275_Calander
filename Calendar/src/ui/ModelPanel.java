@@ -115,7 +115,6 @@ public class ModelPanel extends JPanel {
 		return monthly.isSelected();
 	}
 
-
 	public boolean isWeekly() {
 		return weekly.isSelected();
 	}
