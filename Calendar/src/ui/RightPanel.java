@@ -10,12 +10,14 @@ import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.util.ArrayList;
 
+import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 
@@ -48,6 +50,9 @@ public class RightPanel extends JPanel {
 	private String selectedDate = "";
 	private JButton addEvent = new JButton("Add Event");
 	private final JLabel chooseColor = new JLabel("Change Text Color");
+	private JRadioButton all = new JRadioButton("All");
+	private JRadioButton next = new JRadioButton("Next");
+	private ButtonGroup group = new ButtonGroup();
 	/**
 	 * Name for {@link #colors}.
 	 */
@@ -111,9 +116,14 @@ public class RightPanel extends JPanel {
 			}
 		});
 		addEvent.setBounds(260, 90, 100, 30);
-		chooseColor.setBounds(20, 130, 200, 30);
+		chooseColor.setBounds(20, 130, 150, 30);
 		chooseColor.setFont(new Font("Times New Roman", Font.PLAIN, 16));
-		colors.setBounds(20, 170, 200, 30);
+		all.setBounds(190, 130, 60, 30);
+		next.setBounds(270, 130, 60, 30);
+		next.setSelected(true);
+		group.add(all);
+		group.add(next);
+		colors.setBounds(20, 170, 330, 30);
 		events.setBounds(20, 210, 200, 30);
 		events.setFont(new Font("Times New Roman", Font.PLAIN, 16));
 		checkP.setLayout(null);
@@ -133,6 +143,7 @@ public class RightPanel extends JPanel {
 						events.setText("Events of " + s);
 						String n = name.getText();
 						JCheckBox check = new JCheckBox(n);
+						check.setToolTipText(n);
 						check.setFont(new Font("Times New Roman", Font.PLAIN, 16));
 						d.getAddedEvents().add(check);
 						for (Component comp : checkP.getComponents()) {
@@ -214,14 +225,16 @@ public class RightPanel extends JPanel {
 		colors.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				for (ArrayList<DayPanel> l : days) {
-					for (DayPanel d : l) {
-						ArrayList<UnitLabel> uls = d.getAddedEventsTitle();
-						for (UnitLabel ul : uls) {
-							ul.setForeground(rc[colors.getSelectedIndex()]);
+				if (all.isSelected()) {
+					for (ArrayList<DayPanel> l : days) {
+						for (DayPanel d : l) {
+							ArrayList<UnitLabel> uls = d.getAddedEventsTitle();
+							for (UnitLabel ul : uls) {
+								ul.setForeground(rc[colors.getSelectedIndex()]);
+							}
+							d.revalidate();
+							d.repaint();
 						}
-						d.revalidate();
-						d.repaint();
 					}
 				}
 			}
@@ -234,6 +247,8 @@ public class RightPanel extends JPanel {
 		this.add(date);
 		this.add(addEvent);
 		this.add(chooseColor);
+		this.add(all);
+		this.add(next);
 		this.add(colors);
 		this.add(events);
 		this.add(jsp);
@@ -263,6 +278,10 @@ public class RightPanel extends JPanel {
 
 	public JLabel getEvents() {
 		return events;
+	}
+
+	public JComboBox<String> getColors() {
+		return colors;
 	}
 
 }

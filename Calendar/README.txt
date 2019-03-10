@@ -13,5 +13,6 @@ Other: 		The project was coded on a Chinese version Windows. Text file encoding 
 		Click calendar grid that shows in the frame can change selected date to show the events that user added
 		on the day user clicked. Clicking also overrides eventDate that prepared to add new events. When clicking
 		AddEvents button, it overrides the selected date. The date format is MM-dd-yyyy, it must be dash here,
-		slash is not implemented.
-		
+		slash is not implemented. Changing color function has two strategies. One is changing all added events'
+		color and later added events' color (All). The other one is only changing next serial added events' color, not
+		change existed events' color (Next).

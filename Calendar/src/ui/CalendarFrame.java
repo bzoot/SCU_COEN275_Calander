@@ -138,6 +138,7 @@ public class CalendarFrame extends JFrame {
 		this.addWindowListener(new WindowAdapter() {
 			public void windowClosing(WindowEvent e) {
 				try {
+					t.getModels().setMonthly();
 					File file = new File("Days.dat");
 					ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(file));
 					oos.writeObject(CalendarPanel.getInstance().getDays());
