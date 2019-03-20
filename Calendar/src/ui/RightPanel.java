@@ -142,6 +142,7 @@ public class RightPanel extends JPanel {
 						selectedDate = s;
 						events.setText("Events of " + s);
 						String n = name.getText();
+						if (!verify(n, d)) { return; }
 						JCheckBox check = new JCheckBox(n);
 						check.setToolTipText(n);
 						check.setFont(new Font("Times New Roman", Font.PLAIN, 16));
@@ -177,6 +178,18 @@ public class RightPanel extends JPanel {
 					JOptionPane.showMessageDialog(new JPanel(), "Wrong date format! Year must be 2019!",
 							"Warning", JOptionPane.WARNING_MESSAGE);
 				}
+			}
+
+			private boolean verify(String n, DayPanel d) {
+				if (null == n || n.trim().length() == 0) {
+					return false;
+				}
+				for (JCheckBox jcb : d.getAddedEvents()) {
+					if (jcb.getText().equals(n)) {
+						return false;
+					}
+				}
+				return true;
 			}
 		});
 		deletEvent.addActionListener(new ActionListener() {
